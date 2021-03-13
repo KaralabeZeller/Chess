@@ -28,7 +28,7 @@ public class IconFactory {
             case BISHOP:
                 retIcon =  p.getColor() == Utils.Color.WHITE ? new ImageIcon("resources/pieces/WhiteBishop.png") :  new ImageIcon("resources/pieces/BlackBishop.png");
                 break;
-            default: retIcon =  new ImageIcon("resources/pieces/WhitePawn.png");
+            default: retIcon =  new ImageIcon("");
         }
 
         Image image = retIcon.getImage(); // transform it

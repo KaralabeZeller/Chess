@@ -3,7 +3,8 @@ package utils;
 public class Utils {
     public static enum Color {
         BLACK,
-        WHITE
+        WHITE,
+        NONE
     }
 
     public static enum PieceType {
@@ -12,6 +13,7 @@ public class Utils {
         ROOK,
         BISHOP,
         KNIGHT,
-        PAWN
+        PAWN,
+        EMPTY
     }
 }
