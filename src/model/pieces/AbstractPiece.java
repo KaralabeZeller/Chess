@@ -1,13 +1,6 @@
 package model.pieces;
 
-import utils.MoveCalculator;
 import utils.Utils;
-import view.Square;
-
-import javax.swing.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractPiece implements Piece {
 

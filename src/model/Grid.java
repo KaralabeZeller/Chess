@@ -1,13 +1,14 @@
 package model;
 
 import control.FENParser;
+import model.pieces.Empty;
 import model.pieces.Piece;
-import utils.MoveCalculator;
+import control.MoveCalculator;
 import utils.Position;
+import utils.Utils;
 import view.Square;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class Grid {
 
@@ -15,6 +16,7 @@ public class Grid {
     private static Square[][] grid;
     private static Position selected;
     private static Grid instance = null;
+    private static Position[] moves;
     
     private Grid(String fen) {
         selected = new Position(-1, -1);
@@ -41,8 +43,12 @@ public class Grid {
     }
 
 
-    public Square getSquare(int y, int x) {
+    public static Square getSquare(int y, int x) {
         return grid[y][x];
+    }
+
+    public static Square getSquare(Position p) {
+        return grid[p.row][p.col];
     }
 
     public static void select(Position pos) {
@@ -57,14 +63,24 @@ public class Grid {
         if(selected.isEmpty()) {
             selected = pos;
             selectSquare(pos, Color.orange);
-            Position[] moves = MoveCalculator.calculate(grid[pos.row][pos.col]);
+            moves = MoveCalculator.calculate(grid[pos.row][pos.col]);
             if(moves != null ) {
                 for (Position move : moves) {
                     selectSquare(move, Color.GREEN);
                 }
             }
+            // Hit something
+        } else {
+            for(Position curr : moves) {
+                if(curr.equals(pos)) {
+                    getSquare(pos).setPiece(getSquare(selected).getPiece());
+                    getSquare(selected).setPiece(new Empty(Utils.Color.NONE));
+                    deselectAll();
+                }
+            }
         }
     }
+
 
 
     private static void selectSquare(Position pos, Color color) {
@@ -78,5 +94,6 @@ public class Grid {
                 grid[y][x].setDefaultColor();
             }
         }
+        selected = new Position(-1,-1);
     }
 }

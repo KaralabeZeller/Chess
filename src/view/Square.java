@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Square extends JButton{
 
@@ -51,6 +53,10 @@ public class Square extends JButton{
         return col;
     }
 
+    public Position getPosition() {
+        return new Position(row, col);
+    }
+
     public void setPlace(int row, int col) {
         this.row = row;
         this.col = col;
@@ -62,6 +68,7 @@ public class Square extends JButton{
             public void stateChanged(ChangeEvent evt) {
                 if (getModel().isPressed()) {
                         Grid.select(new Position(row, col));
+
                     }
                 }
             }
@@ -76,7 +83,9 @@ public class Square extends JButton{
         setBackground(color);
     }
 
-    public Position getPosition() {
-        return new Position(row, col);
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+
+        setIcon(IconFactory.getIcon(piece));
     }
 }
