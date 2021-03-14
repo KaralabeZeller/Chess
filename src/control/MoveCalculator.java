@@ -85,12 +85,20 @@ public class   MoveCalculator { // TODO refactor SERIOUSLY!!
 
         if(current.getPiece().getColor() == Utils.Color.WHITE) {
             if(Grid.getSquare(y-1, x).getPiece().getType() == Utils.PieceType.EMPTY) addMove(moveList, y - 1, x);
-            if(Grid.getSquare(y-1, x-1).getPiece().getType() != Utils.PieceType.EMPTY) addMove(moveList, y - 1, x-1);
-            if(Grid.getSquare(y-1, x+1).getPiece().getType() != Utils.PieceType.EMPTY) addMove(moveList, y - 1, x+1);
+            if(x - 1 >= 0 && x + 1 <= 7) {
+                if (Grid.getSquare(y - 1, x - 1).getPiece().getType() != Utils.PieceType.EMPTY)
+                    addMove(moveList, y - 1, x - 1);
+                if (Grid.getSquare(y - 1, x + 1).getPiece().getType() != Utils.PieceType.EMPTY)
+                    addMove(moveList, y - 1, x + 1);
+            }
         } else {
             if(Grid.getSquare(y+1, x).getPiece().getType() == Utils.PieceType.EMPTY)  addMove(moveList, y + 1, x);
-            if(Grid.getSquare(y+1, x-1).getPiece().getType() != Utils.PieceType.EMPTY) addMove(moveList, y + 1, x-1);
-            if(Grid.getSquare(y+1, x+1).getPiece().getType() != Utils.PieceType.EMPTY) addMove(moveList, y + 1, x+1);
+            if(x - 1 >= 0 && x + 1 <= 7) {
+                if (Grid.getSquare(y + 1, x - 1).getPiece().getType() != Utils.PieceType.EMPTY)
+                    addMove(moveList, y + 1, x - 1);
+                if (Grid.getSquare(y + 1, x + 1).getPiece().getType() != Utils.PieceType.EMPTY)
+                    addMove(moveList, y + 1, x + 1);
+            }
 
         }
 
