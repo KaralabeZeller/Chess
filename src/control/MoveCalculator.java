@@ -15,25 +15,6 @@ public class   MoveCalculator { // TODO refactor SERIOUSLY!!
     static Utils.PieceType actualType;
     static Utils.Color actualColor;
 
-    public static List<Position> calculateKing(Square current) {
-        Position[] moves;
-        List<Position> moveList = new ArrayList<>();
-
-        int y = current.getRow();
-        int x = current.getColumn();
-
-        addMove(moveList, y - 1, x);
-        addMove(moveList, y + 1, x);
-        addMove(moveList, y - 1, x + 1);
-        addMove(moveList, y + 1, x + 1);
-        addMove(moveList, y - 1, x - 1);
-        addMove(moveList, y + 1, x - 1);
-        addMove(moveList, y, x - 1);
-        addMove(moveList, y ,x + 1);
-
-        return moveList;
-    }
-
     private static void addMove(List<Position> moves, int y, int x) {
 
         if((y >= 0 && y <= 7) && (x >= 0 && x <= 7)) {
@@ -85,6 +66,7 @@ public class   MoveCalculator { // TODO refactor SERIOUSLY!!
 
         if(current.getPiece().getColor() == Utils.Color.WHITE) {
             if(Grid.getSquare(y-1, x).getPiece().getType() == Utils.PieceType.EMPTY) addMove(moveList, y - 1, x);
+            if( y == 6 && Grid.getSquare(y-2, x).getPiece().getType() == Utils.PieceType.EMPTY) addMove(moveList, y - 2, x);
             if(x - 1 >= 0 && x + 1 <= 7) {
                 if (Grid.getSquare(y - 1, x - 1).getPiece().getType() != Utils.PieceType.EMPTY)
                     addMove(moveList, y - 1, x - 1);
@@ -93,6 +75,7 @@ public class   MoveCalculator { // TODO refactor SERIOUSLY!!
             }
         } else {
             if(Grid.getSquare(y+1, x).getPiece().getType() == Utils.PieceType.EMPTY)  addMove(moveList, y + 1, x);
+            if(y == 1 && Grid.getSquare(y+2, x).getPiece().getType() == Utils.PieceType.EMPTY)  addMove(moveList, y + 2, x);
             if(x - 1 >= 0 && x + 1 <= 7) {
                 if (Grid.getSquare(y + 1, x - 1).getPiece().getType() != Utils.PieceType.EMPTY)
                     addMove(moveList, y + 1, x - 1);
@@ -229,6 +212,26 @@ public class   MoveCalculator { // TODO refactor SERIOUSLY!!
 
         return moveList;
     }
+
+    public static List<Position> calculateKing(Square current) {
+        Position[] moves;
+        List<Position> moveList = new ArrayList<>();
+
+        int y = current.getRow();
+        int x = current.getColumn();
+
+        addMove(moveList, y - 1, x);
+        addMove(moveList, y + 1, x);
+        addMove(moveList, y - 1, x + 1);
+        addMove(moveList, y + 1, x + 1);
+        addMove(moveList, y - 1, x - 1);
+        addMove(moveList, y + 1, x - 1);
+        addMove(moveList, y, x - 1);
+        addMove(moveList, y ,x + 1);
+
+        return moveList;
+    }
+
 
     private static List<Position> calculateQueen(Square current) {
 
