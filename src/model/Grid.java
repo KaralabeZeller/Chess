@@ -10,6 +10,8 @@ import view.Square;
 
 import java.awt.*;
 
+import static utils.Utils.PieceType.KING;
+
 public class Grid {
 
     final static int size = 8;
@@ -17,9 +19,11 @@ public class Grid {
     private static Position selected;
     private static Grid instance = null;
     private static Position[] moves;
+    private static boolean check;
     
     private Grid(String fen) {
         selected = new Position(-1, -1);
+        check = false;
         grid = FENParser.parse(fen);
     }
 
@@ -76,11 +80,35 @@ public class Grid {
                     getSquare(pos).setPiece(getSquare(selected).getPiece());
                     getSquare(selected).setPiece(new Empty(Utils.Color.NONE));
                     deselectAll();
+                    moves = MoveCalculator.calculate(grid[pos.row][pos.col]);
+                    checkCheck(pos, moves);
                 }
             }
         }
     }
 
+    private static void checkCheck(Position pos, Position[] moves) { // This is shit.. TODO refactor, and redo everything 
+        for(Position move: moves) {
+            if(getSquare(move.row, move.col).getPiece().getType() == KING) {
+                System.out.println("Check");
+                check = true;
+                Position[] kingMoves = MoveCalculator.calculate(grid[move.row][move.col]);
+                if(kingMoves == null) {
+                    System.out.println("Check Mate");
+                } else {
+                    for(Position currMove: moves) {
+                        for(Position kingMove: kingMoves) {
+                            if(currMove.equals(kingMove)) {
+                                System.out.println("Check Mate");
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
 
 
     private static void selectSquare(Position pos, Color color) {
